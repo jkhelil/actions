@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: custom-operators
+  namespace: openshift-marketplace
+spec:
+  sourceType: grpc
+  image: quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index@sha256:1cabb8cd3a8c17c339d0cbdc088effabf0404036ff297e3a3d0ff42c219ba94b
+  displayName: custom-operators
+  updateStrategy:
+    registryPoll:
+      interval: 30m
