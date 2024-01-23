@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Check for new OSP nightly build
         run: skopeo --version
-        run: jq --version || true
-        run: apt-cache search jq
+      - run: jq --version || true
+      - run: apt-cache search jq
           # - uses: actions/checkout@v4
 
           # - name: Create Pull Request
