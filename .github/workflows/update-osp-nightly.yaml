@@ -8,9 +8,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check for new OSP nightly build
-        run: skopeo --version
-      - run: jq --version || true
-      - run: apt-cache search jq
+        run: |
+          tag="v4.14-candidate"
+          inspected=$(skopeo inspect docker://quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index:$tag)
+          created=$(date +%s -d $(echo "$inspected" | jq -r '.Created'))
+          printf "created: %s\n" $created
+          _24hours_ago=$(($(date +%s)-950400))
+          if [ $created -lt $_24hours_ago ]; then
+            echo "DEBUG: No new nightly build"
+            exit 0
+          fi
+          echo "DEBUG: New nightly build found"
+          digest=$(echo "$inspected" | jq -r '.Digest')
+          printf "digest: %s\n" $digest
           # - uses: actions/checkout@v4
 
           # - name: Create Pull Request
