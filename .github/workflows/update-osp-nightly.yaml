@@ -1,0 +1,15 @@
+name: update-osp-nightly
+run-name: Check for OSP nightly and create a PR
+on: workflow_dispatch
+  # schedule:
+  #  - cron: '0 2 * * *'
+jobs:
+  update-osp-nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check for new OSP nightly build
+        run: apt-get -y install skopeo
+          # - uses: actions/checkout@v4
+
+          # - name: Create Pull Request
+          # uses: peter-evans/create-pull-request@v5
