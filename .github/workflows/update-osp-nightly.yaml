@@ -13,7 +13,7 @@ jobs:
           inspected=$(skopeo inspect docker://quay.io/openshift-pipeline/openshift-pipelines-pipelines-operator-bundle-container-index:$tag)
           created=$(date +%s -d $(echo "$inspected" | jq -r '.Created'))
           printf "created: %s\n" $created
-          _24hours_ago=$(($(date +%s)-950400))
+          _24hours_ago=$(($(date +%s)-1950400))
           if [ $created -lt $_24hours_ago ]; then
             echo "DEBUG: No new nightly build"
             exit 0
