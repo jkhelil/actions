@@ -8,7 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check for new OSP nightly build
-        run: sudo apt-get -y install skopeo
+        run: skopeo --version
+        run: jq --version || true
+        run: apt-cache search jq
           # - uses: actions/checkout@v4
 
           # - name: Create Pull Request
