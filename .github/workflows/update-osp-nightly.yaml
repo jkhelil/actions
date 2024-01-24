@@ -15,9 +15,15 @@ jobs:
           created=$(echo "$inspected" | jq -r '.Created')
           echo "DEBUG: tag $tag created: $created"
           digest=$(echo "$inspected" | jq -r '.Digest')
-          echo "digest: $digest"
+          echo "DEBUG: digest: $digest"
           sed -i -E "s/sha256:[0-9a-f]{64}/sha256:${digest}/g" catalog-source.yaml
       - name: Create Pull Request
-        run: gh pr create -B main -H feature_branch --title "Automated changes by GitHub action" --body 'Created by Github action'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: main
+          commit-message: "[new-osp-nightly-build] automated change"
+          body: |
+            Automated changes by [update-osp-nightly]
+
+            Found new OSP nightly build
